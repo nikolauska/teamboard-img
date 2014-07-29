@@ -1,0 +1,17 @@
+{
+  "name": "teamboard-img",
+  "version": "0.0.0",
+  "description": "static content service for teamboard",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.7.2",
+    "mongodb": "^1.4.7",
+    "jade": "^1.5.0",
+    "webshot": "^0.15.2"
+  }
+}
