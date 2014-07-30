@@ -1,7 +1,7 @@
 'use strict';
 
 
-var mongo    = require('../utils/mongo');
+var mongo    = require('../services/mongo');
 var ObjectID = require('mongodb').ObjectID;
 
 module.exports = function(req, res, next, id) {

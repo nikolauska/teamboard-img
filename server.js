@@ -3,12 +3,12 @@
 var app   = require('express')();
 var utils = require('./utils');
 
-// resolve id-parameter to a board from mongodb
-app.param('id', require('./middleware/board'));
+// resolve id-parameter to a board from mongodb: attaches to 'req.board'
+app.param('board_id', require('./middleware/board'));
 
 // resolve screenshot for the given board
-app.get('/boards/:id/screenshot', function(req, res, next) {
-	var path = 'static/' + req.params.id + '.png';
+app.get('/boards/:board_id/screenshot', function(req, res, next) {
+	var path = 'static/' + req.params.board_id + '.png';
 	utils.diff(req.board, function(refresh) {
 		if(refresh) {
 			// (re)generate screenshot first by compiling
