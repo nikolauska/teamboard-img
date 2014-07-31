@@ -5,4 +5,4 @@ html(lang="en")
 	body
 		#board
 			each ticket in tickets
-				.ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px;")
+				.ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px; background-color: #{ticket.color}")

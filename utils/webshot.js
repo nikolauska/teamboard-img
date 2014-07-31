@@ -5,14 +5,14 @@ var webshot = require('webshot');
 
 module.exports = function(html, dest, callback) {
 
-	var zoomFactor = 0.25;
+	var zoomFactor = 0.20;
 
 	var options = {
 		siteType:   'html',
 		zoomFactor: zoomFactor,
 		shotSize: {
-			width:  800 * zoomFactor,
-			height: 480 * zoomFactor
+			width:  1920 * zoomFactor,
+			height: 1080 * zoomFactor
 		}
 	}
 
