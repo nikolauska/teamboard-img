@@ -3,7 +3,7 @@
 
 var webshot = require('webshot');
 
-module.exports = function(html, dest, callback) {
+module.exports = function(html, callback) {
 
 	var zoomFactor = 0.20;
 
@@ -16,10 +16,10 @@ module.exports = function(html, dest, callback) {
 		}
 	}
 
-	return webshot(html, dest, options, function(err) {
+	return webshot(html, options, function(err, renderStream) {
 		if(err) {
-			return callback(err);
+			return callback(err, null);
 		}
-		return callback();
+		return callback(null, renderStream);
 	});
 }
