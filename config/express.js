@@ -2,6 +2,7 @@
 
 var app    = require('express')();
 var config = require('../config');
+var router = express.router();
 
 if(process.env.NODE_ENV == 'development') {
 	app.use(require('morgan')({ format: 'dev' }));
