@@ -1,18 +1,15 @@
 {
   "name": "teamboard-img",
-  "version": "0.0.0",
-  "description": "static content service for teamboard",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "author": "",
   "license": "MIT",
+  "scripts": {
+    "build": "gulp build",
+    "start": "gulp build && babel-node lib/server.js"
+  },
   "dependencies": {
-    "express": "^4.7.2",
-    "jade": "^1.5.0",
-    "lodash": "^2.4.1",
-    "mongodb": "^1.4.7",
-    "webshot": "^0.15.2"
-  }
+    "express": "^4.12.4",
+    "jade": "^1.9.2",
+    "mongoose": "^4.0.3",
+    "webshot": "^0.16.0"
+  },
+  "devDependencies": {}
 }
