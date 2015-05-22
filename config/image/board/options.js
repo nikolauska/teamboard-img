@@ -1,11 +1,12 @@
 'use strict';
 
 // Required options for creating board in jade
-var jade = {
-    customBackground: '',
-    background: '',
-    tickets: []                   
-};
+var optionsJade = {
+        customBackground: req.resolved.board.customBackground,
+        background: bg,
+        tickets: tickets,
+        pretty: true                 
+    };
 
 // Defines zooming for webshot image
 var zoomFactor = 1;
@@ -21,7 +22,7 @@ var webshot = {
 };
 
 module.exports = {
-    jade: jade,
+    jade: optionsJade,
     zoomFactor: zoomFactor,
     webshot: webshot
 }
