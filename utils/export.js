@@ -41,7 +41,7 @@ function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 
 			if(doc) {
 				// Image was found on database so return that
-				return callback(null, new Buffer(doc.data, 'binary'));				
+				return callback(null, new Buffer(doc.data));				
 			} else {
 				// Generate image from html
 				return webshot(html, imagePath, webshotOpt, function(err) {

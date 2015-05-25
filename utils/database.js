@@ -18,21 +18,27 @@ function findHash(hash, callback) {
 }
 
 function storeImage(hash, image, callback) {
-	var bitmap = fs.readFileSync(image);
-	var data = new Buffer(bitmap).toString('binary');
-
-	var newImg = new Image( {
-		hash: hash,
-		data: bitmap
-	});
-
-	return newImg.save(function(err) {
+	return fs.readFileSync(image, '', {}, function(err, data){
 		if(err) {
-			return callback(err);
+			callback(err);
 		}
 
-		return callback(null, data);
+		//var data = new Buffer(data).toString('binary');
+
+		var newImg = new Image( {
+			hash: hash,
+			data: data
+		});
+
+		return newImg.save(function(err) {
+			if(err) {
+				return callback(err);
+			}
+
+			return callback(null, data);
+		});
 	});
+	
 }
 
 module.exports = {
