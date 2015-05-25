@@ -2,16 +2,27 @@
   "name": "teamboard-img",
   "license": "MIT",
   "scripts": {
-    "build": "gulp build",
-    "start": "gulp build && babel-node lib/server.js"
+    "test": "./node_modules/.bin/gulp test",
+    "start": "node index.js"
   },
   "dependencies": {
     "MD5": "^1.2.2",
+    "babel": "^5.4.7",
     "body-parser": "^1.12.4",
     "express": "^4.12.4",
     "jade": "^1.9.2",
     "mongoose": "^4.0.3",
     "webshot": "^0.16.0"
   },
-  "devDependencies": {}
+   "devDependencies": {
+    "chalk": "^0.5.1",
+    "gulp": "~3.8.0",
+    "gulp-mocha": "~0.4.1",
+    "gulp-util": "~2.2.16",
+    "purdy": "^1.0.1",
+    "should": "~4.0.0",
+    "supertest": "~0.13.0",
+    "mockgoose": "~1.10.7",
+    "promise": "~6.0.0"
+  }
 }

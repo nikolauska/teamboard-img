@@ -1,10 +1,11 @@
 'use strict';
+var options = require('./server');
 
 // Required options for creating board in jade
 var optionsJade = {
-        customBackground: '',
-        background: '',
-        tickets: '',
+        customBackground: options.customBackground,
+        background: options.background,
+        tickets: options.tickets,
         pretty: true                 
     };
 
