@@ -1,24 +1,38 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var fs 		 = require('fs');
 
 var Image  	 = mongoose.model('image');
 
 function findHash(hash, callback) {
 	var query = Image.where({ hash: hash });
 
-	return query.findOne(callback)
+	return query.findOne(function(err, doc) {
+		if(err) {
+			return callback(err);
+		}
+
+		return callback(null, doc);
+	})
 }
 
 function storeImage(hash, image, callback) {
-	var data = new Buffer(image).toString('base64');
+	var bitmap = fs.readFileSync(image);
+	var data = new Buffer(bitmap).toString('base64');
 
 	var newImg = new Image( {
 		hash: hash,
 		data: data
 	});
 
-	return newImg.save(callback);
+	return newImg.save(function(err) {
+		if(err) {
+			return callback(err);
+		}
+
+		return callback(null, data);
+	});
 }
 
 module.exports = {
