@@ -13,9 +13,9 @@ var options 	= [];
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-var port = process.env.PORT || 8888;
 
-router.get('/webshot/board', function(req, res, options) {
+
+router.get('/webshot/board', function(req, res) {
 	function imageCallback(err, data) {
 		if(err) {
 			return res.attachment('error.txt').send(200, err);
@@ -27,27 +27,15 @@ router.get('/webshot/board', function(req, res, options) {
 	var options = {
 		'background': req.background,
 		'customBackground': req.customBackground,
-		'ticket':  {
-			'position': {  
-				'x':    req.ticket.position.x,
-				'y':	req.ticket.position.y
-				} 
-			}
+		'tickets': req.tickets
 		};
 
-
-	return exportAs.generateImage('board', imageCallback, options); //res.json({message: 'Return image here'});
+	return exportAs.generateImage('board', imageCallback, options);
 });
 
 app.use(express.static(__dirname + '/config/image/img'),router);
-app.listen(port);
-console.log("Listening to port: " + port);
 
 module.exports.router = router;
-
-/**
- * The Express application.
- */
 module.exports.app = app;
 
 /**
