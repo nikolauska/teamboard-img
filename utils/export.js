@@ -2,6 +2,7 @@
 
 var webshot  	 = require('webshot');
 var jade 	 	 = require('jade');
+var fs 			 = require('fs');
 
 var imageOptions = require('../config/image/options');
 var database	 = require('./utils/database');
@@ -18,7 +19,7 @@ function generateImage(type, callback, jadeOptions, webshotOptions) {
 	if(typeOf webshotOpt == "undefined") {webshotOpt = optionsDefault.webshotOptions;};
 
 	// Where image will be created before saving to db
-	imagePath = '/temp/' + id + 'png';
+	imagePath = '/static/' + id + 'png';
 
 
 	// Generates html
@@ -30,24 +31,37 @@ function generateImage(type, callback, jadeOptions, webshotOptions) {
 		var hashed = hash(html);
 
 		// Get array of found entries from database
-		var found = database.findHash(hashed);
-
-		// Check if image already exists
-		if(found.length > 0) {
-			return callback(null, found[0].data);
-		}
-
-		// Generate image from html
-		return webshot(html, imagepath, webshotOpt, function(err) {
+		return database.findHash(hashed, function(err, doc) {
 			if(err) {
 				return callback(err);
 			}
 
-			// Store image to database and get returned
-			var data = database.storeImage(hash, imagePath);
+			if(doc === null) {
+				// Generate image from html
+				return webshot(html, imagepath, webshotOpt, function(err) {
+					if(err) {
+						return callback(err);
+					}
 
-			return callback(null, data);
-		});
+					// Store image to database and get returned binary code
+					var data = database.storeImage(hash, imagePath);
+
+					// Remove generated image file
+					return fs.unlink(imagePath, function(err) {
+						if(err) {
+							callback(err);
+						}
+
+						return callback(null, data);
+					});
+
+					
+				});
+			} else {
+				// Image was found on database so return that
+				return return callback(null, doc.data);
+			}
+		});	
 	});	
 }
 
