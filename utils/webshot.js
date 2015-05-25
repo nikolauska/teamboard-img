@@ -2,10 +2,10 @@
 
 var webshot  	 = require('webshot');
 var jade 	 	 = require('jade');
-var md5 		 = require('MD5');
 
 var imageOptions = require('../config/image/options');
 var database	 = require('./utils/database');
+var hash	 	 = require('./utils/hashing');
 
 
 function generateImage(type, callback, jadeOptions, webshotOptions) {
@@ -27,10 +27,10 @@ function generateImage(type, callback, jadeOptions, webshotOptions) {
 			return callback(err);
 		}
 
-		var hash = md5(html);
+		var hashed = hash(html);
 
 		// Get array of found entries from database
-		var found = database.findHash(hash);
+		var found = database.findHash(hashed);
 
 		// Check if image already exists
 		if(found.length > 0) {
