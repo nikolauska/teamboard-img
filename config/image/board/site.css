@@ -8,7 +8,8 @@ body {
   margin: 0;
   padding: 0; }
 
-#board {
+#board { 
+  background-size: cover;
   width:1920px;
   height:1080px; 
 }

@@ -2,9 +2,9 @@
 
 // Required options for creating board in jade
 var optionsJade = {
-        customBackground: req.resolved.board.customBackground,
-        background: bg,
-        tickets: tickets,
+        customBackground: '',
+        background: '',
+        tickets: '',
         pretty: true                 
     };
 
