@@ -44,22 +44,24 @@ function generateImage(type, callback, jadeOptions, webshotOptions) {
 					}
 
 					// Store image to database and get returned binary code
-					var data = database.storeImage(hash, imagePath);
-
-					// Remove generated image file
-					return fs.unlink(imagePath, function(err) {
+					return database.storeImage(hash, imagePath, function(err, data) {
 						if(err) {
-							callback(err);
+							return callback(err);
 						}
 
-						return callback(null, data);
-					});
+						// Remove generated image file
+						return fs.unlink(imagePath, function(err) {
+							if(err) {
+								return callback(err);
+							}
 
-					
+							return callback(null, data);
+						});
+					});	
 				});
 			} else {
 				// Image was found on database so return that
-				return return callback(null, doc.data);
+				return return callback(null, new Buffer(doc.data, 'base64'));
 			}
 		});	
 	});	
