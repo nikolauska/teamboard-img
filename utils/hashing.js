@@ -3,7 +3,7 @@
 var md5 = require('MD5');
 
 function generateHash(html) {
-	return MD5(html);
+	return md5(html);
 }
 
 module.exports = {

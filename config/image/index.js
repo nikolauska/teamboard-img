@@ -1,11 +1,13 @@
-var images = require('./');
+'use strict';
+
+var board = require('./board/options');
 
 function getFromType(type) {
 	switch(type) {
     	case 'board':
     		return {
-    			options: images.board.options,
-    			path: '/config/image/board/site.jade'
+    			options: board,
+    			path: '../config/image/board/site.jade'
     		};
     };
 }

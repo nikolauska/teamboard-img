@@ -8,59 +8,63 @@ var imageOptions = require('../config/image');
 var database	 = require('./database');
 var hash	 	 = require('./hashing');
 
+var error        = require('../utils/error');
 
-function generateImage(type, callback, jadeOptions, webshotOptions) {
+
+
+
+function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 	var optionsDefault = imageOptions.getFromType(type);
-	var jadeOpt = optionsDefault.jadeOptions;
-	var webshotOpt = optionsDefault.webshotOptions;
+	var jadeOpt = optionsDefault.options.jade;
+	var webshotOpt = optionsDefault.options.webshot;
 	
 	// If options weren't given then use default
 	if(jadeOptions) {jadeOpt = jadeOptions;};
 	if(webshotOptions) {webshotOpt = webshotOptions;};
 
 	// Where image will be created before saving to db
-	imagePath = '/static/' + id + 'png';
+	var imagePath = require('../static') + id + '.png';
 
 	// Generates html
-	return jade.renderFile(jadePath, jadeOpt, function(err, html) {
+	return jade.renderFile(optionsDefault.options.path, jadeOpt, function(err, html) {
 		if(err) {
-			return callback(err);
+			return callback(error(501, err));
 		}
 
-		var hashed = hash(html);
+		var hashed = hash.generateHash(html);
 
 		// Get array of found entries from database
 		return database.findHash(hashed, function(err, doc) {
 			if(err) {
-				return callback(err);
+				return callback(error(502, err));
 			}
 
-			if(doc === null) {
+			if(doc) {
+				// Image was found on database so return that
+				return callback(null, new Buffer(doc.data, 'binary'));				
+			} else {
 				// Generate image from html
-				return webshot(html, imagepath, webshotOpt, function(err) {
+				return webshot(html, imagePath, webshotOpt, function(err) {
 					if(err) {
-						return callback(err);
+						return callback(error(503, err));
 					}
 
 					// Store image to database and get returned binary code
 					return database.storeImage(hash, imagePath, function(err, data) {
 						if(err) {
-							return callback(err);
+							return callback(error(504, err));
 						}
 
 						// Remove generated image file
 						return fs.unlink(imagePath, function(err) {
 							if(err) {
-								return callback(err);
+								return callback(error(505, err));
 							}
 
 							return callback(null, data);
 						});
 					});	
 				});
-			} else {
-				// Image was found on database so return that
-				return callback(null, new Buffer(doc.data, 'base64'));
 			}
 		});	
 	});	

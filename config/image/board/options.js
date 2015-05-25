@@ -1,11 +1,10 @@
 'use strict';
-var options = require('./server');
 
 // Required options for creating board in jade
-var optionsJade = {
-        customBackground: options.customBackground,
-        background: options.background,
-        tickets: options.tickets,
+var jade = {
+        customBackground: 'PLAY',
+        background: '',
+        tickets: [],
         pretty: true                 
     };
 
@@ -22,8 +21,11 @@ var webshot = {
     }
 };
 
+var path = __dirname + '/site.jade';
+
 module.exports = {
-    jade: optionsJade,
+    jade: jade,
     zoomFactor: zoomFactor,
-    webshot: webshot
+    webshot: webshot,
+    path: path
 }

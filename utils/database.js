@@ -19,11 +19,11 @@ function findHash(hash, callback) {
 
 function storeImage(hash, image, callback) {
 	var bitmap = fs.readFileSync(image);
-	var data = new Buffer(bitmap).toString('base64');
+	var data = new Buffer(bitmap).toString('binary');
 
 	var newImg = new Image( {
 		hash: hash,
-		data: data
+		data: bitmap
 	});
 
 	return newImg.save(function(err) {
