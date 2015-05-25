@@ -3,19 +3,18 @@ var fs			=	 require('fs');
 var express 	=	 require('express');
 var bodyParser 	=	 require('body-parser');
 
-var utils      = require('./utils');
-var config     = require('./config');
+var utils		=	 require('./utils');
+var config		=	 require('./config');
 
 var app = express();
-var router = express.Router();
-var exports = module.exports = {};
+var Router = express.Router();
 var options = [];
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 var port = process.env.PORT || 8888;
 
-router.get('/webshot/board', function(req, res, options) {
+Router.get('/webshot/board', function(req, res, options) {
 	var options {
 		'background': req.background,
 		'customBackground': req.customBackground,
@@ -33,6 +32,6 @@ router.get('/webshot/board', function(req, res, options) {
 });
 
 app.use(express.static(__dirname + '/config/image/img'),router);
-
 app.listen(port);
 console.log("Listening to port: " + port);
+module.exports = Router;
