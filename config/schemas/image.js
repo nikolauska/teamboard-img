@@ -1,3 +1,6 @@
+'use strict';
+
+var mongoose = require('mongoose');
 
 module.exports = new mongoose.Schema({
 	/**
@@ -12,7 +15,7 @@ module.exports = new mongoose.Schema({
 	 * Actual image data in binary
 	 */
 	data: {
-		type: 	 buffer
+		type: 	 Buffer,
 		default: null
 	},
 

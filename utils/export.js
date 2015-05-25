@@ -4,23 +4,22 @@ var webshot  	 = require('webshot');
 var jade 	 	 = require('jade');
 var fs 			 = require('fs');
 
-var imageOptions = require('../config/image/options');
-var database	 = require('./utils/database');
-var hash	 	 = require('./utils/hashing');
+var imageOptions = require('../config/image');
+var database	 = require('./database');
+var hash	 	 = require('./hashing');
 
 
 function generateImage(type, callback, jadeOptions, webshotOptions) {
-	var jadeOpt = jadeOptions;
-	var webshotOpt = webshotOptions;
 	var optionsDefault = imageOptions.getFromType(type);
-
+	var jadeOpt = optionsDefault.jadeOptions;
+	var webshotOpt = optionsDefault.webshotOptions;
+	
 	// If options weren't given then use default
-	if(typeOf jadeOpt == "undefined") {jadeOpt = optionsDefault.jadeOptions;};
-	if(typeOf webshotOpt == "undefined") {webshotOpt = optionsDefault.webshotOptions;};
+	if(jadeOptions) {jadeOpt = jadeOptions;};
+	if(webshotOptions) {webshotOpt = webshotOptions;};
 
 	// Where image will be created before saving to db
 	imagePath = '/static/' + id + 'png';
-
 
 	// Generates html
 	return jade.renderFile(jadePath, jadeOpt, function(err, html) {
@@ -61,7 +60,7 @@ function generateImage(type, callback, jadeOptions, webshotOptions) {
 				});
 			} else {
 				// Image was found on database so return that
-				return return callback(null, new Buffer(doc.data, 'base64'));
+				return callback(null, new Buffer(doc.data, 'base64'));
 			}
 		});	
 	});	
