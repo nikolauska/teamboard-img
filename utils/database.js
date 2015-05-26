@@ -32,16 +32,16 @@ function findHash(hash, callback) {
  * @returns {function} callback
  */
 function storeImage(hash, image, callback) {
-	return fs.readFile(image, '', {}, function(err, img){
+	return fs.readFile(image, '', function(err, data){
 		if(err) {
 			callback(err);
 		}
 
-		console.log(img);
+		console.log('Hash to be saved: ' + hash);
 
 		var newImg = new Image( {
 			hash: hash,
-			data: img
+			data: data
 		});
 
 		return newImg.save(function(err) {
@@ -49,7 +49,9 @@ function storeImage(hash, image, callback) {
 				return callback(err);
 			}
 
-			return callback(null, img);
+			console.log('Saved to database');
+
+			return callback(null, data);
 		});
 	});
 	

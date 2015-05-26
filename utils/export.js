@@ -65,7 +65,7 @@ function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 					console.log('Image generated');
 
 					// Store image to database and get returned binary code
-					return database.storeImage(hash, imagePath, function(err, data) {
+					return database.storeImage(hashed, imagePath, function(err, data) {
 						if(err) {
 							return callback(error(504, err));
 						}
