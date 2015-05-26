@@ -6,13 +6,16 @@ html {
 
 body {
   margin: 0;
-  padding: 0; }
+  padding: 0; 
+  background-color: #EDEDED;
+  background-size: 100% 100%;
+  width:1920px;
+  height:1080px;
+}
 
 #board {
   background-color: #EDEDED; 
   background-size: cover;
-  width:1920px;
-  height:1080px; 
 }
  
 .ticket {
@@ -32,4 +35,27 @@ body {
     height: 76px;
     margin: 8px;
     overflow: hidden;
-    white-space: pre-wrap; }
+    white-space: pre-wrap; 
+}
+
+.bgPlay {
+  background-image: url("bg/play.png");
+}
+.bgSwot {
+  background-image: url('bg/swot.png');
+}
+.bgScrum {
+  background-image: url('bg/scrum.png');
+}
+.bgKanban {
+  background-image: url('bg/kanban.png');
+}
+.bgKDT {
+  background-image: url('bg/keep_drop_try.png');
+}
+.bgCJM {
+  background-image: url('bg/customer_journey_map.png');
+}
+.bgBMC {
+  background-image: url('bg/business_model_canvas.png');
+}

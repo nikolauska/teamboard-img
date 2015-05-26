@@ -1,0 +1,72 @@
+doctype html
+html(lang="en")
+    head
+        link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lato', type='text/css')
+        link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster', type='text/css') 
+        link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', type='text/css') 
+        style(type="text/css"): include site.css
+    case background
+        when 'PLAY'
+            body.bgPlay
+                #board
+                    each ticket in tickets
+                        .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
+                            .color(style="background-color: #{ticket.color}")
+                            .content #{ticket.content}
+        when 'SWOT'
+            body.bgSwot
+                #board
+                    each ticket in tickets
+                        .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
+                            .color(style="background-color: #{ticket.color}")
+                            .content #{ticket.content}
+        when 'SCRUM'
+            body.bgScrum
+                #board
+                    each ticket in tickets
+                        .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
+                            .color(style="background-color: #{ticket.color}")
+                            .content #{ticket.content}
+        when 'KANBAN'
+            body.bgKanban
+                #board
+                    each ticket in tickets
+                        .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
+                            .color(style="background-color: #{ticket.color}")
+                            .content #{ticket.content}
+        when 'KEEP_DROP_TRY'
+            body.bgKDT
+                #board
+                    each ticket in tickets
+                        .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
+                            .color(style="background-color: #{ticket.color}")
+                            .content #{ticket.content}
+        when 'CUSTOMER_JOURNEY_MAP'
+            body.bgCJM
+                #board
+                    each ticket in tickets
+                        .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
+                            .color(style="background-color: #{ticket.color}")
+                            .content #{ticket.content}
+        when 'BUSINESS_MODEL_CANVAS'
+            body.bgBMC
+                #board
+                    each ticket in tickets
+                        .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
+                            .color(style="background-color: #{ticket.color}")
+                            .content #{ticket.content}
+        when 'CUSTOM'
+            body(style = "background-image: url(#{customBackground});")
+                #board
+                    each ticket in tickets
+                        .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
+                            .color(style="background-color: #{ticket.color}")
+                            .content #{ticket.content}
+        default
+            body
+                #board
+                    each ticket in tickets
+                        .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
+                            .color(style="background-color: #{ticket.color}")
+                            .content #{ticket.content}
+        

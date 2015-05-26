@@ -1,40 +1,54 @@
 'use strict';
 
-var webshot  	 = require('webshot');
-var jade 	 	 = require('jade');
-var fs 			 = require('fs');
+var webshot  = require('webshot');
+var jade 	 = require('jade');
+var fs 		 = require('fs');
 
-var imageOptions = require('../config/image');
-var database	 = require('./database');
-var hash	 	 = require('./hashing');
+var database = require('./database');
+var hash	 = require('./hashing');
 
-var error        = require('../utils/error');
+var error    = require('../utils/error');
+var board    = require('../static/board');
 
+/**
+ * Gets options needed for jade from request message
+ * @param {object} request - request message from api.
+ * @returns {object} jade options
+ */
+function getJadeOptions(req) {
+	var jade = board.jade;
 
+	if(req.background != "CUSTOM") {
+		jade.background = req.background ? req.background : "PLAY";
+	} else {
+		jade.customBackground = req.customBackground ? req.customBackground : "";
+	};
+
+	jade.tickets = req.tickets ? req.tickets : [];
+
+	return jade;
+}
+
+/**
+ * Gets options needed for webshot from request message
+ * @param {object} request - request message from api.
+ * @returns {object} webshot options
+ */
+function getWebshotOptions(req) {
+	// Not info yet what is needed so return default settings
+	return board.webshot;
+}
 
 /**
  * Stores image to database
- * @param {string} type - type of image wanted.
- * @param {string} id - board id.
- * @param {function} callback - Function to be run after generation.
  * @param {object} jadeOptions - options for jade html generation.
  * @param {object} webshotOptions - options for webshot image generation.
+ * @param {function} callback - Function to be run after generation.
  * @returns {function} callback
  */
-function generateImage(type, id, callback, jadeOptions, webshotOptions) {
-	var optionsDefault = imageOptions.getFromType(type);
-	var jadeOpt = optionsDefault.options.jade;
-	var webshotOpt = optionsDefault.options.webshot;
-	
-	// If options weren't given then use default
-	if(jadeOptions) {jadeOpt = jadeOptions;};
-	if(webshotOptions) {webshotOpt = webshotOptions;};
-
-	// Where image will be created before saving to db
-	var imagePath = require('../static') + 'temp/' + id + '.png';
-
+function generateImage(jadeOptions, webshotOptions, callback) {
 	// Generates html
-	return jade.renderFile(optionsDefault.options.path, jadeOpt, function(err, html) {
+	return jade.renderFile(board.pathJade, jadeOptions, function(err, html) {
 		if(err) {
 			return callback(error(501, err));
 		}
@@ -56,8 +70,12 @@ function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 				return callback(null, new Buffer(doc.data, 'binary'));				
 			} else {
 				console.log('Hash not found! Generating new image');
+
+				// Where image will be created before saving to db
+				var imagePath = require('../static') + 'temp/' + hashed + '.png';
+
 				// Generate image from html
-				return webshot(html, imagePath, webshotOpt, function(err) {
+				return webshot(html, imagePath, webshotOptions, function(err) {
 					if(err) {
 						return callback(error(503, err));
 					}
@@ -90,5 +108,7 @@ function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 }
 
 module.exports = {
-	generateImage: generateImage
+	getJadeOptions: getJadeOptions,
+	getWebshotOptions: getWebshotOptions,
+	generateImage: generateImage	
 }

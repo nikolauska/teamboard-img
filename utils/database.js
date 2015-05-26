@@ -37,8 +37,6 @@ function storeImage(hash, image, callback) {
 			callback(err);
 		}
 
-		console.log('Hash to be saved: ' + hash);
-
 		var newImg = new Image( {
 			hash: hash,
 			data: data
@@ -48,8 +46,6 @@ function storeImage(hash, image, callback) {
 			if(err) {
 				return callback(err);
 			}
-
-			console.log('Saved to database');
 
 			return callback(null, data);
 		});

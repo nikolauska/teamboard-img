@@ -7,8 +7,7 @@ var router      = express.Router();
 
 app.use('/image', require('./routes/board'));
 
-app.use(express.static(__dirname + '/static/background'),router);
-app.use(express.static(__dirname + '/config/image'),router);
+app.use(express.static(__dirname + '/static/board'),router);
 
 /**
  * Error handling middleware. All errors passed to 'next' will eventually end
