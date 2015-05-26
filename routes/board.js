@@ -23,12 +23,15 @@ Router.route('/board/:board_id')
 			if(err) {
 				return next(err);
 			}
-
-			return res.attachment('board.png').status(200).send(data);
+			
+			res.writeHead(200, {'Content-Type': 'image/png'});
+			res.end(data, 'binary');
+			return res;
+			//return res.attachment('board.png').status(200).contentType()send(data);
 		} 
 
 		var bg = req.background ? req.background : "PLAY";
-		var cbg = req.customBackground ? req.background : "";
+		var cbg = req.customBackground ? req.customBackground : "";
 		var tickets = req.tickets ? req.tickets : [];
 
 		var options = {

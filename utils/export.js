@@ -12,7 +12,15 @@ var error        = require('../utils/error');
 
 
 
-
+/**
+ * Stores image to database
+ * @param {string} type - type of image wanted.
+ * @param {string} id - board id.
+ * @param {function} callback - Function to be run after generation.
+ * @param {object} jadeOptions - options for jade html generation.
+ * @param {object} webshotOptions - options for webshot image generation.
+ * @returns {function} callback
+ */
 function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 	var optionsDefault = imageOptions.getFromType(type);
 	var jadeOpt = optionsDefault.options.jade;
@@ -23,7 +31,7 @@ function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 	if(webshotOptions) {webshotOpt = webshotOptions;};
 
 	// Where image will be created before saving to db
-	var imagePath = require('../static') + id + '.png';
+	var imagePath = require('../static/temp/') + id + '.png';
 
 	// Generates html
 	return jade.renderFile(optionsDefault.options.path, jadeOpt, function(err, html) {
@@ -41,7 +49,7 @@ function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 
 			if(doc) {
 				// Image was found on database so return that
-				return callback(null, new Buffer(doc.data));				
+				return callback(null, new Buffer(doc.data, 'binary'));				
 			} else {
 				// Generate image from html
 				return webshot(html, imagePath, webshotOpt, function(err) {

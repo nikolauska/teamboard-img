@@ -1,13 +1,15 @@
 'use strict';
 
 var board = require('./board/options');
+var bgBoard = require('../../static/board');
 
 function getFromType(type) {
 	switch(type) {
     	case 'board':
     		return {
     			options: board,
-    			path: '../config/image/board/site.jade'
+    			path: board.path,
+    			bgPath: bgBoard.path
     		};
     };
 }

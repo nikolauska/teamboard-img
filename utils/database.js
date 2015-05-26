@@ -5,6 +5,13 @@ var fs 		 = require('fs');
 
 var Image  	 = mongoose.model('image');
 
+
+/**
+ * Looks for hashed html from database and returns found document
+ * @param {string} hash - Hashed html.
+ * @param {function} callback - Function to be run after query.
+ * @returns {function} callback
+ */
 function findHash(hash, callback) {
 	var query = Image.where({ hash: hash });
 
@@ -17,17 +24,22 @@ function findHash(hash, callback) {
 	})
 }
 
+/**
+ * Stores image to database
+ * @param {string} hash - Hashed html.
+ * @param {string} image - Path to image file.
+ * @param {function} callback - Function to be run after save.
+ * @returns {function} callback
+ */
 function storeImage(hash, image, callback) {
-	return fs.readFileSync(image, '', {}, function(err, data){
+	return fs.readFile(image, '', {}, function(err, img){
 		if(err) {
 			callback(err);
 		}
 
-		//var data = new Buffer(data).toString('binary');
-
 		var newImg = new Image( {
 			hash: hash,
-			data: data
+			data: img
 		});
 
 		return newImg.save(function(err) {
