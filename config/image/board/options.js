@@ -2,11 +2,10 @@
 
 // Required options for creating board in jade
 var jade = {
-        customBackground: 'PLAY',
-        background: '',
-        tickets: [],
-        pretty: true                 
-    };
+    background: '',
+    tickets: [],
+    pretty: true                 
+};
 
 // Defines zooming for webshot image
 var zoomFactor = 1;

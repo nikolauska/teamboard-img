@@ -3,8 +3,8 @@
 var express    = require('express');
 
 var middleware = require('../middleware');
-var error      = require('../utils/error');
 var exportAs   = require('../utils/export');
+var bgBoard    = require('../static/board');
 
 var Router     = express.Router();
 
@@ -24,23 +24,22 @@ Router.route('/board/:board_id')
 				return next(err);
 			}
 			
-			res.writeHead(200, {'Content-Type': 'image/png'});
-			res.end(data, 'binary');
-			return res;
-			//return res.attachment('board.png').status(200).contentType()send(data);
+			return res.attachment('board.png').status(200).contentType('image/png').send(data);
 		} 
 
 		var bg = req.background ? req.background : "PLAY";
 		var cbg = req.customBackground ? req.customBackground : "";
 		var tickets = req.tickets ? req.tickets : [];
 
+		bg = require('../static/board').getBackgroundPath(bg);
+
 		var options = {
-			'background': bg,
-			'customBackground': cbg,
-			'tickets': tickets
+			background: bg,
+			tickets: tickets,
+			pretty: true 
 		};
 
-		return exportAs.generateImage('board', req.resolved.id, imageCallback);
+		return exportAs.generateImage('board', req.resolved.id, imageCallback, options);
 	})
 
 module.exports = Router;

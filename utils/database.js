@@ -37,6 +37,8 @@ function storeImage(hash, image, callback) {
 			callback(err);
 		}
 
+		console.log(img);
+
 		var newImg = new Image( {
 			hash: hash,
 			data: img
@@ -47,7 +49,7 @@ function storeImage(hash, image, callback) {
 				return callback(err);
 			}
 
-			return callback(null, data);
+			return callback(null, img);
 		});
 	});
 	

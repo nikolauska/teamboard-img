@@ -1,7 +1,7 @@
 'use strict';
 
 var board = require('./board/options');
-var bgBoard = require('../../static/board');
+var bg = require('../../static') + 'board';
 
 function getFromType(type) {
 	switch(type) {
@@ -9,7 +9,7 @@ function getFromType(type) {
     		return {
     			options: board,
     			path: board.path,
-    			bgPath: bgBoard.path
+    			bgPath: bg
     		};
     };
 }

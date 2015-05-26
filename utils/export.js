@@ -31,7 +31,7 @@ function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 	if(webshotOptions) {webshotOpt = webshotOptions;};
 
 	// Where image will be created before saving to db
-	var imagePath = require('../static/temp/') + id + '.png';
+	var imagePath = require('../static') + 'temp/' + id + '.png';
 
 	// Generates html
 	return jade.renderFile(optionsDefault.options.path, jadeOpt, function(err, html) {
@@ -39,8 +39,11 @@ function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 			return callback(error(501, err));
 		}
 
+		console.log('HTML generated: ' + html);
+
 		var hashed = hash.generateHash(html);
 
+		console.log('Hash generated: ' + hashed);
 		// Get array of found entries from database
 		return database.findHash(hashed, function(err, doc) {
 			if(err) {
@@ -48,14 +51,18 @@ function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 			}
 
 			if(doc) {
+				console.log('Hash found! Getting image from database');
 				// Image was found on database so return that
 				return callback(null, new Buffer(doc.data, 'binary'));				
 			} else {
+				console.log('Hash not found! Generating new image');
 				// Generate image from html
 				return webshot(html, imagePath, webshotOpt, function(err) {
 					if(err) {
 						return callback(error(503, err));
 					}
+
+					console.log('Image generated');
 
 					// Store image to database and get returned binary code
 					return database.storeImage(hash, imagePath, function(err, data) {
@@ -63,11 +70,15 @@ function generateImage(type, id, callback, jadeOptions, webshotOptions) {
 							return callback(error(504, err));
 						}
 
+						console.log('Image saved to database');
+
 						// Remove generated image file
 						return fs.unlink(imagePath, function(err) {
 							if(err) {
 								return callback(error(505, err));
 							}
+
+							console.log('Generated image deleted');
 
 							return callback(null, data);
 						});
