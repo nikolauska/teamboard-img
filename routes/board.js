@@ -22,7 +22,8 @@ Router.route('/board')
 			if(err) {
 				return next(err);
 			}
-			return res.status(200).contentType('octet-stream').send(data);
+			
+			return res.status(200).contentType('application/octet-stream').send(data);
 		});
 	})
 
