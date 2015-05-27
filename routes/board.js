@@ -16,14 +16,13 @@ Router.route('/board')
 	 * returns:
 	 *   png image of given board
 	 */
-	.get(function(req, res, next) {
+	.post(function(req, res, next) {
 		console.log("request received");
 		return exportAs.generateImage(exportAs.getJadeOptions(req), exportAs.getWebshotOptions(req), function(err, data) {
 			if(err) {
 				return next(err);
 			}
-			
-			return res.attachment('board.png').status(200).contentType('image/png').send(data);
+			return res.status(200).contentType('octet-stream').send(data);
 		});
 	})
 
