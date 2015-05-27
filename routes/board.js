@@ -17,6 +17,7 @@ Router.route('/board')
 	 *   png image of given board
 	 */
 	.get(function(req, res, next) {
+		console.log("request received");
 		return exportAs.generateImage(exportAs.getJadeOptions(req), exportAs.getWebshotOptions(req), function(err, data) {
 			if(err) {
 				return next(err);

@@ -1,13 +1,13 @@
 var config 		= require('./config');
 var mongoose 	= require('./config/mongoose');
 var app 		= require('./config/express');
-
+var Router		= require('./routes/board')
 var express 	= require('express');
-var router      = express.Router();
+
 
 app.use('/image', require('./routes/board'));
 
-app.use(express.static(__dirname + '/static/board'),router);
+app.use(express.static(__dirname + '/static/board'),Router);
 
 /**
  * Error handling middleware. All errors passed to 'next' will eventually end
