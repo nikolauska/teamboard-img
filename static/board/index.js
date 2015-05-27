@@ -20,7 +20,7 @@ var webshot = {
 		right: 	0, 
 		top: 	0, 
 		bottom: 0 
-	}
+	},
     renderDelay: 10
 };
 
@@ -29,7 +29,7 @@ var pathJade = __dirname + '/site.jade';
 
 module.exports = {
     jade: jade,
-    zoomFactor: zoomFactor,
+    zoomFactor: 1,
     webshot: webshot,
     pathJade: pathJade
 }
