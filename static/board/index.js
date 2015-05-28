@@ -24,7 +24,7 @@ var webshot = {
 };
 
 // Path where jade file can be found on static folder
-var pathBg = __dirname + '/bg/';
+var pathBg = 'http://localhost:9003/bg/';
 var pathJade = __dirname + '/site.jade';
 
 module.exports = {
