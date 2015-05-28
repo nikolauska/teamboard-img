@@ -3,7 +3,6 @@
 // Required options for creating board in jade
 var jade = {
     background: '',
-    customBackground: '',
     tickets: [],
     pretty: true                 
 };
@@ -25,11 +24,13 @@ var webshot = {
 };
 
 // Path where jade file can be found on static folder
+var pathBg = __dirname + '/bg/';
 var pathJade = __dirname + '/site.jade';
 
 module.exports = {
     jade: jade,
     zoomFactor: 1,
     webshot: webshot,
+    pathBg: pathBg,
     pathJade: pathJade
 }

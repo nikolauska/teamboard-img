@@ -18,8 +18,32 @@ var board    = require('../static/board');
 function getJadeOptions(body) {
 	var jade = board.jade;
 
-	jade.background = body.background;
-	jade.customBackground = body.customBackground;
+	switch (body.background) {
+		case 'CUSTOM': 
+			jade.background = body.customBackground;
+			break;
+		case 'PLAY':
+			jade.background = board.pathBg + 'play.png';
+			break;
+		case 'SWOT':
+			jade.background = board.pathBg + 'swot.png';
+			break;
+		case 'SCRUM':
+			jade.background = board.pathBg + 'scrum.png';
+			break;
+		case 'KANBAN':
+			jade.background = board.pathBg + 'kanban.png';
+			break;
+		case 'KEEP_DROP_TRY':
+			jade.background = board.pathBg + 'keep_drop_try.png';
+			break;
+		case 'CUSTOMER_JOURNEY_MAP':
+			jade.background = board.pathBg + 'customer_journey_map.png';
+			break;
+		case 'BUSINESS_MODEL_CANVAS':
+			jade.background = board.pathBg + 'business_model_canvas.png';
+			break;
+	};
 	jade.tickets = body.tickets;
 
 	return jade;

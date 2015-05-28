@@ -2,7 +2,6 @@
 
 var express    = require('express');
 
-
 var validator  = require('../config/validator');
 var middleware = require('../middleware');
 var utils      = require('../utils');
@@ -19,12 +18,8 @@ Router.route('/board')
 	 *   png image of given board
 	 */
 	.post(function(req, res, next) {
-<<<<<<< HEAD
 		console.log("request received");
 		console.log(req.body);
-=======
-		console.log("request received" + JSON.stringify(req.body));
->>>>>>> origin/master
 
 		return validator.board(req, function(err) {
 			if(err) {
@@ -36,7 +31,7 @@ Router.route('/board')
 					return next('error: '+ err);
 				}
 				
-				return res.status(200).contentType('application/octet-stream').send(data);
+				return res.status(200).contentType('image/png').send(data);
 			});
 		});	
 	})
