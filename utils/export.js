@@ -18,13 +18,9 @@ var board    = require('../static/board');
 function getJadeOptions(req) {
 	var jade = board.jade;
 
-	if(req.background != "CUSTOM") {
-		jade.background = req.background ? req.background : "PLAY";
-	} else {
-		jade.customBackground = req.customBackground ? req.customBackground : "";
-	};
-
-	jade.tickets = req.tickets ? req.tickets : [];
+	jade.background = req.background;
+	jade.customBackground = req.customBackground;
+	jade.tickets = req.tickets;
 
 	return jade;
 }
