@@ -20,13 +20,14 @@ Router.route('/board')
 	 */
 	.post(function(req, res, next) {
 		console.log("request received");
+		console.log(req.body);
 
 		return validator.board(req, function(err) {
 			if(err) {
-				return next(utils.error(501, err));
+				return next(utils.error(601, err));
 			}
 
-			return utils.export.generateImage(utils.export.getJadeOptions(req), utils.export.getWebshotOptions(req), function(err, data) {
+			return utils.export.generateImage(utils.export.getJadeOptions(req.body), utils.export.getWebshotOptions(req.body), function(err, data) {
 				if(err) {
 					return next(err);
 				}

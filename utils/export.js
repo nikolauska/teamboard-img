@@ -15,12 +15,12 @@ var board    = require('../static/board');
  * @param {object} request - request message from api.
  * @returns {object} jade options
  */
-function getJadeOptions(req) {
+function getJadeOptions(body) {
 	var jade = board.jade;
 
-	jade.background = req.background;
-	jade.customBackground = req.customBackground;
-	jade.tickets = req.tickets;
+	jade.background = body.background;
+	jade.customBackground = body.customBackground;
+	jade.tickets = body.tickets;
 
 	return jade;
 }
