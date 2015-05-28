@@ -1,54 +1,3 @@
-var Validator = require('jsonschema').Validator;
-var v = new Validator();
-
-var ticketSchema = {
-    'id': '/ticketSchema',
-    'type': 'object',
-    'properties': {
-    	'color': {
-    		'type': 'string'
-    	},
-    	'content': {
-    		'type': 'string'
-    	},
-    	'position': {
-    		'type': 'object',
-    		'items': {
-    			'x': {
-    				'type': 'number'
-    			},
-    			'y': {
-    				'type': 'number'
-    			}
-    		}
-    	}
-    },
-    'required': ['color', 'content', 'position']
-};
-
-var board = {
-    "id": "/boardRequest",
-    "type": "object",
-    "properties": {
-    	'id': {
-    		type: 'string'
-    	},
-    	'background': {
-    		type: 'string'
-    	},
-    	'customBackground': {
-    		'type': 'string'
-    	},
-    	'tickets': {
-    		'type': 'array',
-    		'items': {
-    			'$ref': '/ticketSchema'
-    		}
-    	}
-    },
-    'required': ['background', 'customBackground', 'tickets']
-};
-
 function boardf(body) {
 	if(typeof body.id == 'undefined') {
 		return 'id is not defined on request';
@@ -93,8 +42,4 @@ module.exports = function(req, callback) {
 	var err = null;
 
 	return callback(boardf(req.body));
-
-
-	//v.addSchema(ticketSchema, '/ticketSchema');
-	//return callback(v.validate(req.body, board));
 }

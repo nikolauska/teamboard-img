@@ -3,8 +3,7 @@
 // Required options for creating board in jade
 var jade = {
     background: '',
-    tickets: [],
-    pretty: true                 
+    tickets: []                
 };
 
 // Required options for webshot
@@ -20,7 +19,7 @@ var webshot = {
 		top: 	0, 
 		bottom: 0 
 	},
-    renderDelay: 10
+    renderDelay: 1
 };
 
 // Path where jade file can be found on static folder

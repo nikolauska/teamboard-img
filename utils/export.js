@@ -73,11 +73,8 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 			return callback(error(501, err));
 		}
 
-		console.log('HTML generated: ' + html);
-
 		var hashed = hash.generateHash(html);
 
-		console.log('Hash generated: ' + hashed);
 		// Get array of found entries from database
 		return database.findHash(hashed, function(err, doc) {
 			if(err) {
@@ -85,14 +82,12 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 			}
 
 			if(doc) {
-				console.log('Hash found! Getting image from database');
 				// Image was found on database so return that
 				return callback(null, new Buffer(doc.data, 'binary'));				
 			} else {
-				console.log('Hash not found! Generating new image');
 
 				// Where image will be created before saving to db
-				var imagePath = require('../static') + 'temp/' + hashed + '.png';
+				var imagePath = require('../static/temp') + hashed + '.png';
 
 				// Generate image from html
 				return webshot(html, imagePath, webshotOptions, function(err) {
@@ -100,23 +95,17 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 						return callback(error(503, err));
 					}
 
-					console.log('Image generated');
-
 					// Store image to database and get returned binary code
 					return database.storeImage(hashed, imagePath, function(err, data) {
 						if(err) {
 							return callback(error(504, err));
 						}
 
-						console.log('Image saved to database');
-
 						// Remove generated image file
 						return fs.unlink(imagePath, function(err) {
 							if(err) {
 								return callback(error(505, err));
 							}
-
-							console.log('Generated image deleted');
 
 							return callback(null, data);
 						});

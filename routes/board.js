@@ -3,7 +3,6 @@
 var express    = require('express');
 
 var validator  = require('../config/validator');
-var middleware = require('../middleware');
 var utils      = require('../utils');
 var bgBoard    = require('../static/board');
 
@@ -18,9 +17,6 @@ Router.route('/board')
 	 *   png image of given board
 	 */
 	.post(function(req, res, next) {
-		console.log("request received");
-		console.log(req.body);
-
 		return validator.board(req, function(err) {
 			if(err) {
 				return next(utils.error(601, err));
