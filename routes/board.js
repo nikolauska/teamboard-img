@@ -19,7 +19,7 @@ Router.route('/board')
 	 *   png image of given board
 	 */
 	.post(function(req, res, next) {
-		console.log("request received");
+		console.log("request received" + JSON.stringify(req.body));
 
 		return validator.board(req, function(err) {
 			if(err) {
@@ -28,7 +28,7 @@ Router.route('/board')
 
 			return utils.export.generateImage(utils.export.getJadeOptions(req), utils.export.getWebshotOptions(req), function(err, data) {
 				if(err) {
-					return next(err);
+					return next('error: '+ err);
 				}
 				
 				return res.status(200).contentType('application/octet-stream').send(data);

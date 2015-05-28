@@ -2,7 +2,7 @@ var Validator = require('jsonschema').Validator;
 var v = new Validator();
 
 var ticketSchema = {
-    'id': '/ticketsSchema',
+    'id': '/ticketSchema',
     'type': 'object',
     'properties': {
     	'color': {
