@@ -32,24 +32,35 @@ function findHash(hash, callback) {
  * @returns {function} callback
  */
 function storeImage(hash, image, callback) {
-	return fs.readFile(image, '', function(err, data){
+	return fs.stat(image, function(err, stats) {
 		if(err) {
-			callback(err);
+			return callback(err);
 		}
 
-		var newImg = new Image( {
-			hash: hash,
-			data: data
-		});
-
-		return newImg.save(function(err) {
+		return fs.readFile(image, '', function(err, data){
 			if(err) {
 				return callback(err);
 			}
 
-			return callback(null, data);
+			if(stats.size < 16777216) {
+				var newImg = new Image( {
+					hash: hash,
+					data: data
+				});
+
+				return newImg.save(function(err) {
+					if(err) {
+						return callback(err);
+					}
+
+					return callback(null, data);
+				});
+			} else {
+				return callback(null, data);
+			}		
 		});
 	});
+	
 	
 }
 
