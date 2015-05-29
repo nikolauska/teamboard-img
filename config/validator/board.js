@@ -38,8 +38,5 @@ function ticketsf(tickets) {
 }
 
 module.exports = function(req, callback) {
-	var body = req.body;
-	var err = null;
-
 	return callback(boardf(req.body));
 }
