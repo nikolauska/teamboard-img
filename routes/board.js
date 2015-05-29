@@ -19,7 +19,7 @@ Router.route('/board')
 	.post(function(req, res, next) {
 		return validator.board(req, function(err) {
 			if(err) {
-				return next(utils.error(601, err));
+				return next(utils.error(500, err));
 			}
 
 			return utils.export.generateImage(utils.export.getJadeOptions(req.body), utils.export.getWebshotOptions(req.body), function(err, data) {
