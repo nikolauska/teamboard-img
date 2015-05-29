@@ -83,14 +83,14 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 		var hashed = hash.generateHash(html);
 
 		// Get array of found entries from database
-		return database.findHash(hashed, function(err, doc) {
+		return database.findHash(hashed, function(err, file) {
 			if(err) {
 				return callback(err);
 			}
 
 			if(doc) {
 				// Image was found on database so return that
-				return callback(null, new Buffer(doc.data, 'binary'));				
+				return callback(null, new Buffer(file, 'binary'));				
 			} else {
 
 				// Where image will be created before saving to db
@@ -99,19 +99,19 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 				// Generate image from html
 				return webshot(html, imagePath, webshotOptions, function(err) {
 					if(err) {
-						return callback(err);
+						return callback(error(500, err));
 					}
 
 					// Store image to database and get returned binary code
 					return database.storeImage(hashed, imagePath, function(err, data) {
 						if(err) {
-							return callback(err);
+							return callback(error(500, err));
 						}
 
 						// Remove generated image file
 						return fs.unlink(imagePath, function(err) {
 							if(err) {
-								return callback(err);
+								return callback(error(500, err));
 							}
 
 							return callback(null, data);

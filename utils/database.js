@@ -1,10 +1,14 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var fs 		 = require('fs');
+var mongoose   = require('mongoose');
+var fs 		   = require('fs');
 
-var Image  	 = mongoose.model('image');
+var Grid 	   = require('gridfs-stream');
+	Grid.mongo = mongoose.mongo;
 
+var Image  	   = mongoose.model('image');
+
+var conn       = mongoose.connection;
 
 /**
  * Looks for hashed html from database and returns found document
@@ -12,16 +16,22 @@ var Image  	 = mongoose.model('image');
  * @param {function} callback - Function to be run after query.
  * @returns {function} callback
  */
-function findHash(hash, callback) {
+function findHash(hash, path, callback) {
 	var query = Image.where({ hash: hash });
 
-	return query.findOne(function(err, doc) {
+	return query.findOne(function(err, file) {
 		if(err) {
 			return callback(err);
 		}
 
-		return callback(null, doc);
-	})
+		return file.retrieveBlobs(function (err) {
+		    if(err) {
+		      return callback(err);
+		    }
+
+		    return callback(null, file);
+		});
+	});
 }
 
 /**
@@ -32,25 +42,24 @@ function findHash(hash, callback) {
  * @returns {function} callback
  */
 function storeImage(hash, image, callback) {
-	return fs.readFile(image, '', function(err, data){
-		if(err) {
-			callback(err);
-		}
+	conn.once('open', function () {
+	    var gfs = Grid(conn.db);
+	 
+	    // streaming to gridfs
+	    //filename to store in mongodb
+	    var writestream = gfs.createWriteStream({
+	        filename: 'board.png'
+	    });
+	    fs.createReadStream(image).pipe(writestream);
 
-		var newImg = new Image( {
-			hash: hash,
-			data: data
-		});
+	    writestream.on('error', function (err) {
+	    	return callback(err);
+	    });
 
-		return newImg.save(function(err) {
-			if(err) {
-				return callback(err);
-			}
-
-			return callback(null, data);
-		});
+	    writestream.on('close', function (file) {
+	    	return callback(null, file);
+	    });
 	});
-	
 }
 
 module.exports = {
