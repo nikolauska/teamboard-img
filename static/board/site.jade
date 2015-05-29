@@ -5,8 +5,8 @@ html(lang="en")
         link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Lobster', type='text/css') 
         link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', type='text/css') 
         style(type="text/css"): include site.css
-    body(style="background-image:url(#{background});")
-        #board
+    body
+        #board(style="background-image:url(#{background}); width:#{width}px; height:#{height}px")
             each ticket in tickets
                 .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
                     .color(style="background-color: #{ticket.color}")

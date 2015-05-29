@@ -45,6 +45,8 @@ function getJadeOptions(body) {
 			break;
 	};
 	jade.tickets = body.tickets;
+	jade.width = 1920 * (body.size.width / 10);
+	jade.height = 1080 * (body.size.height / 10);
 
 	return jade;
 }
@@ -54,9 +56,13 @@ function getJadeOptions(body) {
  * @param {object} request - request message from api.
  * @returns {object} webshot options
  */
-function getWebshotOptions(req) {
-	// Not info yet what is needed so return default settings
-	return board.webshot;
+function getWebshotOptions(body) {
+	var webshotOpt = board.webshot;
+
+	webshotOpt.shotSize.width = 1920 * (body.size.width / 10);
+	webshotOpt.shotSize.height = 1080 * (body.size.height / 10);
+
+	return webshotOpt;
 }
 
 /**
@@ -70,7 +76,7 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 	// Generates html
 	return jade.renderFile(board.pathJade, jadeOptions, function(err, html) {
 		if(err) {
-			return callback(error(500, err));
+			return callback(err);
 		}
 
 		// Generate hash
@@ -79,7 +85,7 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 		// Get array of found entries from database
 		return database.findHash(hashed, function(err, doc) {
 			if(err) {
-				return callback(error(500, err));
+				return callback(err);
 			}
 
 			if(doc) {
@@ -93,19 +99,19 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 				// Generate image from html
 				return webshot(html, imagePath, webshotOptions, function(err) {
 					if(err) {
-						return callback(error(500, err));
+						return callback(err);
 					}
 
 					// Store image to database and get returned binary code
 					return database.storeImage(hashed, imagePath, function(err, data) {
 						if(err) {
-							return callback(error(500, err));
+							return callback(err);
 						}
 
 						// Remove generated image file
 						return fs.unlink(imagePath, function(err) {
 							if(err) {
-								return callback(error(500, err));
+								return callback(err);
 							}
 
 							return callback(null, data);

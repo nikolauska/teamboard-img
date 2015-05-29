@@ -9,12 +9,10 @@ body {
   padding: 0; 
   background-color: #EDEDED;
   background-size: 100% 100%;
-  width:1920px;
-  height:1080px;
 }
 
 #board {
-  background-color: #EDEDED; 
+  background-color: #EDEDED;
   background-size: cover;
 }
  
@@ -24,7 +22,6 @@ body {
   position: absolute;
   border: 1px solid #EDEDED;
   border-radius: 2px;
-  cursor: pointer;
   font-size: 12px;
   background-color: #FFFFFF; 
 }

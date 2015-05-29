@@ -3,7 +3,9 @@
 // Required options for creating board in jade
 var jade = {
     background: '',
-    tickets: []                
+    tickets: [],
+    width: 1920,
+    height: 1080                
 };
 
 // Required options for webshot

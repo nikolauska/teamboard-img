@@ -24,7 +24,7 @@ Router.route('/board')
 
 			return utils.export.generateImage(utils.export.getJadeOptions(req.body), utils.export.getWebshotOptions(req.body), function(err, data) {
 				if(err) {
-					return next('error: '+ err);
+					return next(utils.error(500,err));
 				}
 				
 				return res.status(200).contentType('image/png').send(data);
