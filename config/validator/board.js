@@ -8,6 +8,14 @@ function boardCheck(body) {
             return 'customBackground not defined on request';
         case typeof body.tickets:
             return 'tickets not defined on request';
+        case typeof body.size.width:
+            return 'board width not defined on request';
+        case typeof body.size.height:
+            return 'board height not defined on request';
+    }
+
+    if((body.size.width + body.size.height) > 80) {
+        return 'Board size too big for image';
     }
 
 	return ticketsCheck(body.tickets);
