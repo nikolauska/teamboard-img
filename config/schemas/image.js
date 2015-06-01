@@ -1,6 +1,6 @@
 'use strict';
 
-var mongoose 	= require('mongoose');
+var mongoose    = require('mongoose');
 var mongoConfig = require('../');
 
 module.exports = new mongoose.Schema({
@@ -24,7 +24,7 @@ module.exports = new mongoose.Schema({
 	 * Content type for data stored
 	 */
 	contentType: {
-		type: 	 String,
+		type:    String,
 		default: 'image/png'
 	},
 
@@ -32,8 +32,8 @@ module.exports = new mongoose.Schema({
 	 * Created time, used to remove expired content from database
 	 */
 	createdAt: { 
-		type: Date, 
-		expires: mongoConfig.mongo.expireTimeHours*60*60,
-		default: Date.now 
+		type:     Date, 
+		expires:  mongoConfig.mongo.expireTimeHours * 60 * 60,
+		default:  Date.now 
 	}
 });

@@ -1,14 +1,14 @@
 'use strict';
 
-var webshot  = require('webshot');
-var jade 	 = require('jade');
-var fs 		 = require('fs');
+var webshot = require('webshot');
+var jade    = require('jade');
+var fs      = require('fs');
 
 var database = require('./database');
-var hash	 = require('./hashing');
+var hash     = require('./hashing');
 
-var error    = require('../utils/error');
-var board    = require('../static/board');
+var error = require('../utils/error');
+var board = require('../static/board');
 
 /**
  * Gets options needed for jade from request message
@@ -45,8 +45,8 @@ function getJadeOptions(body) {
 			break;
 	};
 	jade.tickets = body.tickets;
-	jade.width = 1920 * (body.size.width / 10);
-	jade.height = 1080 * (body.size.height / 10);
+	jade.width = jade.width * (body.size.width / 10);
+	jade.height = jade.height * (body.size.height / 10);
 
 	return jade;
 }
@@ -59,8 +59,8 @@ function getJadeOptions(body) {
 function getWebshotOptions(body) {
 	var webshotOpt = board.webshot;
 
-	webshotOpt.shotSize.width = 1920 * (body.size.width / 10);
-	webshotOpt.shotSize.height = 1080 * (body.size.height / 10);
+	webshotOpt.shotSize.width = webshotOpt.shotSize.width * (body.size.width / 10);
+	webshotOpt.shotSize.height = webshotOpt.shotSize.height * (body.size.height / 10);
 
 	return webshotOpt;
 }
@@ -78,8 +78,6 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 		if(err) {
 			return callback(err);
 		}
-
-		// Generate hash
 		var hashed = hash.generateHash(html);
 
 		// Where image will be created before saving to db

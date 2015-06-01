@@ -8,7 +8,7 @@ var jade = {
     tickets: [],
     width: 1920,
     height: 1080                
-};
+}
 
 // Required options for webshot
 var webshot = {
@@ -24,7 +24,7 @@ var webshot = {
 		bottom: 0 
 	},
     renderDelay: 1
-};
+}
 
 // Path where jade file can be found on static folder
 var pathBg = config.bgUrl + ':' + config.port + '/bg/';

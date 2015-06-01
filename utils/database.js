@@ -1,9 +1,9 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var fs 		 = require('fs');
+var fs 	     = require('fs');
 
-var Image  	 = mongoose.model('image');
+var Image = mongoose.model('image');
 
 
 /**
@@ -21,7 +21,7 @@ function findHash(hash, callback) {
 		}
 
 		return callback(null, doc);
-	})
+	});
 }
 
 /**
@@ -42,7 +42,10 @@ function storeImage(hash, image, callback) {
 				return callback(err);
 			}
 
-			if(stats.size < 16777216) {
+			// Max value mongo db allows on default
+			var maxFileSizeInBytes = 16777216;
+
+			if(stats.size < maxFileSizeInBytes) {
 				var newImg = new Image( {
 					hash: hash,
 					data: data
@@ -60,11 +63,9 @@ function storeImage(hash, image, callback) {
 			}		
 		});
 	});
-	
-	
 }
 
 module.exports = {
 	findHash: findHash,
 	storeImage: storeImage
-};
+}

@@ -1,42 +1,37 @@
-function boardf(body) {
-	if(typeof body.id == 'undefined') {
-		return 'id is not defined on request';
-	}
-	if(typeof body.background == 'undefined') {
-		return 'background not defined on request';
-	}
-	if(typeof body.customBackground == 'undefined') {
-		return 'customBackground not defined on request';
-	}
-	if(typeof body.tickets == 'undefined') {
-		return 'tickets not defined on request';
-	}
+function boardCheck(body) {
+    switch('undefined') {
+        case typeof body.id:
+            return 'id is not defined on request';
+        case typeof body.background:
+            return 'background not defined on request';
+        case typeof body.customBackground:
+            return 'customBackground not defined on request';
+        case typeof body.tickets:
+            return 'tickets not defined on request';
+    }
 
-	return ticketsf(body.tickets);
+	return ticketsCheck(body.tickets);
 }
 
-function ticketsf(tickets) {
+function ticketsCheck(tickets) {
 	for (index = 0; index < tickets.length; ++index) {
-		if(typeof tickets[index].color == 'undefined') {
-			return 'color is not defined on ticket number:' + index;
-		}
-		if(typeof tickets[index].content == 'undefined') {
-			return 'content is not defined on ticket number:' + index;
-		}
-		if(typeof tickets[index].position == 'undefined') {
-			return 'position is not defined on ticket number:' + index;
-		}
-		if(typeof tickets[index].position.x == 'undefined') {
-			return 'position x is not defined on ticket number:' + index;
-		}
-		if(typeof tickets[index].position.y == 'undefined') {
-			return 'position y is not defined on ticket number:' + index;
-		}
+        switch('undefined') {
+            case typeof tickets[index].color:
+                return 'color is not defined on ticket number:' + index;
+            case typeof tickets[index].content:
+                return 'content is not defined on ticket number:' + index;
+            case typeof tickets[index].position:
+                return 'position is not defined on ticket number:' + index;
+            case typeof tickets[index].position.x:
+                return 'position x is not defined on ticket number:' + index;
+            case typeof tickets[index].position.y:
+                return 'position y is not defined on ticket number:' + index;
+        }
 	}
 
 	return null;
 }
 
 module.exports = function(req, callback) {
-	return callback(boardf(req.body));
+	return callback(boardCheck(req.body));
 }
