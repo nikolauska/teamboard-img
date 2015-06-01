@@ -1,5 +1,6 @@
 'use strict';
 
-module.exports.diff    = require('./diff');
-module.exports.jade    = require('./jade');
-module.exports.webshot = require('./webshot');
+module.exports.database = require('./database');
+module.exports.error    = require('./error');
+module.exports.export   = require('./export');
+module.exports.hashing  = require('./hashing');
