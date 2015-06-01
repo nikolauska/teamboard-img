@@ -1,5 +1,7 @@
 'use strict';
 
+var config = require('../config')
+
 // Required options for creating board in jade
 var jade = {
     background: '',
@@ -25,7 +27,7 @@ var webshot = {
 };
 
 // Path where jade file can be found on static folder
-var pathBg = 'http://localhost:9003/bg/';
+var pathBg = config.bgUrl + ':' + config.port + '/bg/';
 var pathJade = __dirname + '/site.jade';
 
 module.exports = {
