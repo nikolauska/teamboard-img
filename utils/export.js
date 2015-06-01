@@ -82,44 +82,30 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 		// Generate hash
 		var hashed = hash.generateHash(html);
 
-		// Get array of found entries from database
-		return database.findHash(hashed, function(err, doc) {
+		// Where image will be created before saving to db
+		var imagePath = require('../static/temp') + hashed + '.png';
+
+		// Generate image from html
+		return webshot(html, imagePath, webshotOptions, function(err) {
 			if(err) {
 				return callback(err);
 			}
 
-			if(doc) {
-				// Image was found on database so return that
-				return callback(null, new Buffer(doc.data, 'binary'));				
-			} else {
+			return fs.readFile(imagePath, '', function(err, data){
+				if(err) {
+					return callback(err);
+				}
 
-				// Where image will be created before saving to db
-				var imagePath = require('../static/temp') + hashed + '.png';
-
-				// Generate image from html
-				return webshot(html, imagePath, webshotOptions, function(err) {
+				// Remove generated image file
+				return fs.unlink(imagePath, function(err) {
 					if(err) {
 						return callback(err);
 					}
 
-					// Store image to database and get returned binary code
-					return database.storeImage(hashed, imagePath, function(err, data) {
-						if(err) {
-							return callback(err);
-						}
-
-						// Remove generated image file
-						return fs.unlink(imagePath, function(err) {
-							if(err) {
-								return callback(err);
-							}
-
-							return callback(null, data);
-						});
-					});	
+					return callback(null, data);
 				});
-			}
-		});	
+			});
+		});
 	});	
 }
 
