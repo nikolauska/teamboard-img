@@ -1,6 +1,6 @@
 'use strict';
 
-var config = require('../config')
+var config = require('../../config')
 
 // Required options for creating board in jade
 var jade = {
