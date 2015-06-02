@@ -10,6 +10,8 @@ var hash     = require('./hashing');
 var error = require('../utils/error');
 var board = require('../static/board');
 
+var defaultTeamboardGridSize = 10;
+
 /**
  * Gets options needed for jade from request message
  * @param {object} request - request message from api.
@@ -45,8 +47,8 @@ function getJadeOptions(body) {
 			break;
 	};
 	jade.tickets = body.tickets;
-	jade.width = jade.width * (body.size.width / 10);
-	jade.height = jade.height * (body.size.height / 10);
+	jade.width = jade.width * (body.size.width / defaultTeamboardGridSize);
+	jade.height = jade.height * (body.size.height / defaultTeamboardGridSize);
 
 	return jade;
 }
@@ -59,8 +61,8 @@ function getJadeOptions(body) {
 function getWebshotOptions(body) {
 	var webshotOpt = board.webshot;
 
-	webshotOpt.shotSize.width = webshotOpt.shotSize.width * (body.size.width / 10);
-	webshotOpt.shotSize.height = webshotOpt.shotSize.height * (body.size.height / 10);
+	webshotOpt.shotSize.width = webshotOpt.shotSize.width * (body.size.width / defaultTeamboardGridSize);
+	webshotOpt.shotSize.height = webshotOpt.shotSize.height * (body.size.height / defaultTeamboardGridSize);
 
 	return webshotOpt;
 }
