@@ -1,42 +1,58 @@
-function boardf(body) {
-	if(typeof body.id == 'undefined') {
-		return 'id is not defined on request';
-	}
-	if(typeof body.background == 'undefined') {
-		return 'background not defined on request';
-	}
-	if(typeof body.customBackground == 'undefined') {
-		return 'customBackground not defined on request';
-	}
-	if(typeof body.tickets == 'undefined') {
-		return 'tickets not defined on request';
-	}
+'use strict';
 
-	return ticketsf(body.tickets);
+var config = require('../../static/board');
+
+// Max value was found by testing and its max our 
+//   current version of webshot allows without breaking
+var maxAllowedPixelAmount = 45000000;
+var defaultTeamboardGridSize = 10;
+
+function boardCheck(body) {
+    switch('undefined') {
+        case typeof body.id:
+            return 'id is not defined on request';
+        case typeof body.background:
+            return 'background not defined on request';
+        case typeof body.customBackground:
+            return 'customBackground not defined on request';
+        case typeof body.tickets:
+            return 'tickets not defined on request';
+        case typeof body.size.width:
+            return 'board width not defined on request';
+        case typeof body.size.height:
+            return 'board height not defined on request';
+    }
+
+    var width = config.webshot.shotSize.width * (body.size.width / defaultTeamboardGridSize);
+    var height = config.webshot.shotSize.height * (body.size.height / defaultTeamboardGridSize);
+    var pixels = (width * height);
+    if(pixels > maxAllowedPixelAmount) {
+        return 'Board size goes beyond maximum allowed pixel amount. Current maximum is: ' + maxAllowedPixelAmount + 'px' +
+                ' Your requested board needs: ' + pixels + 'px';
+    }
+
+	return ticketsCheck(body.tickets);
 }
 
-function ticketsf(tickets) {
-	for (index = 0; index < tickets.length; ++index) {
-		if(typeof tickets[index].color == 'undefined') {
-			return 'color is not defined on ticket number:' + index;
-		}
-		if(typeof tickets[index].content == 'undefined') {
-			return 'content is not defined on ticket number:' + index;
-		}
-		if(typeof tickets[index].position == 'undefined') {
-			return 'position is not defined on ticket number:' + index;
-		}
-		if(typeof tickets[index].position.x == 'undefined') {
-			return 'position x is not defined on ticket number:' + index;
-		}
-		if(typeof tickets[index].position.y == 'undefined') {
-			return 'position y is not defined on ticket number:' + index;
-		}
+function ticketsCheck(tickets) {
+	for (var index = 0; index < tickets.length; ++index) {
+        switch('undefined') {
+            case typeof tickets[index].color:
+                return 'color is not defined on ticket number:' + index;
+            case typeof tickets[index].content:
+                return 'content is not defined on ticket number:' + index;
+            case typeof tickets[index].position:
+                return 'position is not defined on ticket number:' + index;
+            case typeof tickets[index].position.x:
+                return 'position x is not defined on ticket number:' + index;
+            case typeof tickets[index].position.y:
+                return 'position y is not defined on ticket number:' + index;
+        }
 	}
 
 	return null;
 }
 
 module.exports = function(req, callback) {
-	return callback(boardf(req.body));
+	return callback(boardCheck(req.body));
 }

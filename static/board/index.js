@@ -1,19 +1,24 @@
 'use strict';
 
+var config = require('../../config')
+
+var resolutionWidth = 1920;
+var resolutionHeight = 1080;
+
 // Required options for creating board in jade
 var jade = {
     background: '',
     tickets: [],
-    width: 1920,
-    height: 1080                
-};
+    width: resolutionWidth,
+    height: resolutionHeight                
+}
 
 // Required options for webshot
 var webshot = {
     siteType:   'html',
     shotSize: {
-        width:  1920,
-        height: 1080
+        width:  resolutionWidth,
+        height: resolutionHeight
     },
     shotOffset: { 
     	left: 	0, 
@@ -22,10 +27,10 @@ var webshot = {
 		bottom: 0 
 	},
     renderDelay: 1
-};
+}
 
 // Path where jade file can be found on static folder
-var pathBg = 'http://localhost:9003/bg/';
+var pathBg = config.bgUrl + ':' + config.port + '/bg/';
 var pathJade = __dirname + '/site.jade';
 
 module.exports = {

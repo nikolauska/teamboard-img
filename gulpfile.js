@@ -5,7 +5,7 @@ var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
 
 gulp.task('test', function() {
-	return gulp.src( ['./test/**/*.js'] )
+	return gulp.src( ['...'] )
 		.pipe(mocha({
 			'timeout':  10000,
 			'reporter': 'spec',

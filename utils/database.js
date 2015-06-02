@@ -1,10 +1,17 @@
 'use strict';
 
+<<<<<<< HEAD
 var mongoose   = require('mongoose');
 var fs 		   = require('fs');
 
 var Grid 	   = require('gridfs-stream');
 	Grid.mongo = mongoose.mongo;
+=======
+var mongoose = require('mongoose');
+var fs 	     = require('fs');
+
+var Image = mongoose.model('image');
+>>>>>>> master
 
 var Image  	   = mongoose.model('image');
 
@@ -65,4 +72,4 @@ function storeImage(hash, image, callback) {
 module.exports = {
 	findHash: findHash,
 	storeImage: storeImage
-};
+}
