@@ -18,7 +18,8 @@ var defaultTeamboardGridSize = 10;
  * @returns {object} jade options
  */
 function getJadeOptions(body) {
-	var jade = board.jade;
+	//Copying json so original won't be overwritten
+	var jade = JSON.parse(JSON.stringify(board.jade));
 
 	switch (body.background) {
 		case 'CUSTOM': 
@@ -59,7 +60,8 @@ function getJadeOptions(body) {
  * @returns {object} webshot options
  */
 function getWebshotOptions(body) {
-	var webshotOpt = board.webshot;
+	//Copying json so original won't be overwritten
+	var webshotOpt = JSON.parse(JSON.stringify(board.webshot));
 
 	webshotOpt.shotSize.width = webshotOpt.shotSize.width * (body.size.width / defaultTeamboardGridSize);
 	webshotOpt.shotSize.height = webshotOpt.shotSize.height * (body.size.height / defaultTeamboardGridSize);
