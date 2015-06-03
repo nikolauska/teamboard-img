@@ -38,7 +38,5 @@ module.exports = {
     zoomFactor: 1,
     webshot: webshot,
     pathBg: pathBg,
-    pathJade: pathJade,
-    resolutionWidth: resolutionWidth,
-    resolutionHeight: resolutionHeight
+    pathJade: pathJade
 }
