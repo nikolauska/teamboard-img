@@ -6,7 +6,7 @@ var app      = require('./config/express');
 var Router   = require('./routes/board')
 var express  = require('express');
 
-app.use('/image', require('./routes/board'));
+app.use('/img', require('./routes/board'));
 app.use(express.static(__dirname + '/static/board'), Router);
 
 /**
