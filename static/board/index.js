@@ -2,20 +2,23 @@
 
 var config = require('../../config')
 
+var resolutionWidth = 1920;
+var resolutionHeight = 1080;
+
 // Required options for creating board in jade
 var jade = {
     background: '',
     tickets: [],
-    width: 1920,
-    height: 1080                
+    width: resolutionWidth,
+    height: resolutionHeight                
 }
 
 // Required options for webshot
 var webshot = {
     siteType:   'html',
     shotSize: {
-        width:  1920,
-        height: 1080
+        width:  resolutionWidth,
+        height: resolutionHeight
     },
     shotOffset: { 
     	left: 	0, 

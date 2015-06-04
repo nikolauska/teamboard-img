@@ -19,7 +19,7 @@ Router.route('/board')
 	.post(function(req, res, next) {
 		return validator.board(req, function(err) {
 			if(err) {
-				return next(utils.error(500, err));
+				return res.status(500).contentType('application/json').send(err);
 			}
 
 			return utils.export.generateImage(
@@ -27,10 +27,10 @@ Router.route('/board')
 				   utils.export.getWebshotOptions(req.body), 
 				   function(err, data) {
 						if(err) {
-							return next(utils.error(500,err));
+							return res.status(500).contentType('application/json').send(err);
 						}
 						
-						return res.status(200).contentType('image/png').send(data);
+						return res.attachment('board.png').status(200).contentType('image/png').send(data);
 					});
 		});	
 	})
