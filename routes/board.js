@@ -30,7 +30,7 @@ Router.route('/board')
 							return res.status(500).contentType('application/json').send(err);
 						}
 						
-						return res.attachment('board.png').status(200).contentType('image/png').send(data);
+						return res.attachment(req.body.name + '.png').status(200).contentType('image/png').send(data);
 					});
 		});	
 	})
