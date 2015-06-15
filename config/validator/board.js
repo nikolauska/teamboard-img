@@ -9,8 +9,6 @@ var defaultTeamboardGridSize = 10;
 
 function boardCheck(body) {
     switch('undefined') {
-        case typeof body.id:
-            return 'id is not defined on request';
         case typeof body.background:
             return 'background not defined on request';
         case typeof body.customBackground:
