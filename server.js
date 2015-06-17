@@ -1,7 +1,6 @@
 'use strict';
 
 var config   = require('./config');
-var mongoose = require('./config/mongoose');
 var app      = require('./config/express');
 var Router   = require('./routes/board')
 var express  = require('express');
@@ -31,7 +30,6 @@ module.exports.app = app;
  *                               listening to incoming requests.
  */
 module.exports.listen = function(onListen) {
-	mongoose.connect(config.mongo.url, config.mongo.opts);
 	this.server = app.listen(config.port, onListen || function() {
 		console.log('server listening at', config.port);
 	});
@@ -43,7 +41,5 @@ module.exports.listen = function(onListen) {
  * @param  {function=}  onShutdown  Callback invoked after shutting down.
  */
 module.exports.shutdown = function(onShutdown) {
-	return this.server.close(function() {
-		mongoose.disconnect(onShutdown || function() {});
-	});
+
 }

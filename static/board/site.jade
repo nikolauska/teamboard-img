@@ -10,5 +10,6 @@ html(lang="en")
             each ticket in tickets
                 .ticket(style="left: #{ticket.position.x}px; top: #{ticket.position.y}px")
                     .color(style="background-color: #{ticket.color}")
-                    .content #{ticket.content}
+                    .heading !{ticket.heading}
+                    .content !{ticket.content}
         
