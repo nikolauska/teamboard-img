@@ -4,7 +4,6 @@ var webshot = require('webshot');
 var jade    = require('jade');
 var fs      = require('fs');
 
-var database = require('./database');
 var hash     = require('./hashing');
 
 var error = require('../utils/error');
