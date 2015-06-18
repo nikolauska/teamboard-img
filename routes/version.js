@@ -16,4 +16,5 @@ Router.route('/')
         res.header("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
         return res.status(200).send();
     });
+
 module.exports = Router;
