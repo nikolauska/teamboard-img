@@ -3,7 +3,7 @@ var Router      = require('express').Router();
 
 Router.route('/')
     .get(function(req, res) {
-        var version = process.env.img_version || 'unknown';
+        var version = process.env.VERSION || 'unknown';
         version = '{"version":"'+version+'"}'
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
