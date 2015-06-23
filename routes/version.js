@@ -1,13 +1,13 @@
 'use strict';
-var Router      = require('express').Router();
+var Router = require('express').Router();
 
 Router.route('/')
     .get(function(req, res) {
         var version = process.env.VERSION || 'unknown';
-        version = '{"version":"'+version+'"}'
+        version = {"version":version};
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
-        return res.status(200).json(JSON.parse(version));
+        return res.status(200).json(version);
     });
 
 Router.route('/')
