@@ -5,8 +5,8 @@ var app      = require('./config/express');
 var Router   = require('./routes/board')
 var express  = require('express');
 
-app.use('/img',     require('./routes/board'));
-app.use('/version', require('./routes/version'));
+app.use('/img',		require('./routes/board'));
+app.use('/img/version',	require('./routes/version'));
 app.use(express.static(__dirname + '/static/board'), Router);
 
 /**
