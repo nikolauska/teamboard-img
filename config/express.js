@@ -10,8 +10,8 @@ if(process.env.NODE_ENV == 'development') {
 
 app.set('json spaces', 2);
 
-app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
-app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.urlencoded({extended: true, limit: '10mb', parameterLimit: 10000}));
+app.use(bodyParser.json({limit: '10mb'}));
 app.use(require('method-override')());
 
 module.exports = app;
