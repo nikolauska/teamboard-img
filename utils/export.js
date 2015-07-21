@@ -11,6 +11,17 @@ var board = require('../static/board');
 
 var defaultTeamboardGridSize = 10;
 
+var Background = {
+	DEFAULT: board.pathBg + '1.png',
+	SWOT: board.pathBg + '4.png',
+	PLAY: board.pathBg + '5.png',
+	KANBAN: board.pathBg + '6.png',
+	KEEP_DROP_TRY: board.pathBg + '7.png',
+	SMOOTH_BRAINSTORMING: board.pathBg + '8.gif',
+	LEAN_CANVAS: board.pathBg + '9.png',
+	IDEA_GATHERING: board.pathBg + '10.png'
+}
+
 /**
  * Gets options needed for jade from request message
  * @param {object} request - request message from api.
@@ -20,32 +31,12 @@ function getJadeOptions(body) {
 	//Copying json so original won't be overwritten
 	var jade = JSON.parse(JSON.stringify(board.jade));
 
-	switch (body.background) {
-		case 'CUSTOM': 
-			jade.background = body.customBackground;
-			break;
-		case 'PLAY':
-			jade.background = board.pathBg + 'play.png';
-			break;
-		case 'SWOT':
-			jade.background = board.pathBg + 'swot.png';
-			break;
-		case 'SCRUM':
-			jade.background = board.pathBg + 'scrum.png';
-			break;
-		case 'KANBAN':
-			jade.background = board.pathBg + 'kanban.png';
-			break;
-		case 'KEEP_DROP_TRY':
-			jade.background = board.pathBg + 'keep_drop_try.png';
-			break;
-		case 'CUSTOMER_JOURNEY_MAP':
-			jade.background = board.pathBg + 'customer_journey_map.png';
-			break;
-		case 'BUSINESS_MODEL_CANVAS':
-			jade.background = board.pathBg + 'business_model_canvas.png';
-			break;
-	};
+	if(body.background !== 'CUSTOM') {
+		jade.background = Background[body.background];
+	} else {
+		jade.background = body.customBackground
+	}
+
 	jade.tickets = body.tickets;
 	jade.width = jade.width * (body.size.width / defaultTeamboardGridSize);
 	jade.height = jade.height * (body.size.height / defaultTeamboardGridSize);
@@ -107,11 +98,11 @@ function generateImage(jadeOptions, webshotOptions, callback) {
 				});
 			});
 		});
-	});	
+	});
 }
 
 module.exports = {
 	getJadeOptions: getJadeOptions,
 	getWebshotOptions: getWebshotOptions,
-	generateImage: generateImage	
+	generateImage: generateImage
 }
